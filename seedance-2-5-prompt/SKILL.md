@@ -37,6 +37,7 @@ description: 把分镜脚本、广告文案或用户brief优化为可直接投�
 - 10秒韩语咖啡馆：`assets/example-10s-korean-cafe-prompt.md`
 - 16秒雨夜蛛丝动作片：`assets/example-16s-webswing-prompt.md`
 - 30秒民国戏曲短剧《绝唱》：`assets/example-30s-juechang-opera-prompt.md`
+- 15秒日立别墅电梯广告：`assets/example-15s-hitachi-elevator-prompt.md`
 
 ## 关键原则
 
