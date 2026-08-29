@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/matutu-ai/seedance2.5-skill/schemas/subject-lock.schema.json",
+  "title": "Subject Lock",
+  "description": "Unified lock definition for product, character, scene, prop, logo, text, camera, and audio subjects.",
+  "type": "object",
+  "required": ["subject", "fixed_attributes"],
+  "properties": {
+    "subject": { "type": "string" },
+    "subject_type": {
+      "type": "string",
+      "enum": [
+        "PRODUCT",
+        "CHARACTER",
+        "SCENE",
+        "PROP",
+        "LOGO",
+        "TEXT",
+        "CAMERA",
+        "AUDIO"
+      ]
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Higher value wins when reference assets conflict with locks."
+    },
+    "source_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Reference asset ids used to establish this lock."
+    },
+    "fixed_attributes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "allowed_changes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "forbidden_changes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

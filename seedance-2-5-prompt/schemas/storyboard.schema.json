@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/matutu-ai/seedance2.5-skill/schemas/storyboard.schema.json",
+  "title": "Storyboard Shot",
+  "description": "One executable shot. Keeps action load bounded so the shot can be generated reliably by Seedance 2.5.",
+  "type": "object",
+  "required": [
+    "shot_id",
+    "start",
+    "end",
+    "shot_size",
+    "camera_movement",
+    "subject_action",
+    "audio"
+  ],
+  "properties": {
+    "shot_id": { "type": "string" },
+    "start": { "type": "number", "minimum": 0 },
+    "end": { "type": "number", "minimum": 0 },
+    "duration_seconds": { "type": "number", "minimum": 0 },
+    "first_frame_state": { "type": "string" },
+    "shot_size": {
+      "type": "string",
+      "enum": [
+        "EXTREME_WIDE",
+        "WIDE",
+        "FULL",
+        "MEDIUM",
+        "MEDIUM_CLOSE_UP",
+        "CLOSE_UP",
+        "EXTREME_CLOSE_UP",
+        "MACRO"
+      ]
+    },
+    "camera_position": { "type": "string" },
+    "camera_movement": {
+      "type": "string",
+      "description": "Keep to one primary movement unless the user explicitly requires compound movement."
+    },
+    "camera_speed": { "type": "string" },
+    "depth_of_field": { "type": "string" },
+    "focus": { "type": "string" },
+    "subject_action": { "type": "string" },
+    "product_action": { "type": "string" },
+    "environment_change": { "type": "string" },
+    "lighting_change": { "type": "string" },
+    "audio": {
+      "type": "object",
+      "properties": {
+        "ambience": { "type": "array", "items": { "type": "string" } },
+        "sfx": { "type": "array", "items": { "type": "string" } },
+        "voice": { "type": "array", "items": { "type": "string" } },
+        "dialogue": { "$ref": "dialogue.schema.json" }
+      }
+    },
+    "transition": {
+      "type": "string",
+      "enum": ["CUT", "MATCH_CUT", "WIPE", "FADE", "DISSOLVE", "NONE"]
+    },
+    "feasibility": {
+      "type": "object",
+      "properties": {
+        "action_load": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH", "OVERLOADED"]
+        },
+        "camera_load": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH", "OVERLOADED"]
+        },
+        "notes": { "type": "string" },
+        "auto_split": { "type": "boolean", "default": false }
+      }
+    }
+  }
+}

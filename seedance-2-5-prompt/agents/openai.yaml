@@ -1,4 +1,4 @@
 interface:
-  display_name: "Seedance 2.5 可投喂提示词师"
-  short_description: "把分镜/脚本优化为可直接投喂 Seedance 2.5 的提示词"
-  default_prompt: "Use $seedance-2-5-prompt 把下面的分镜脚本改写成可直接投喂 Seedance 2.5 的提示词。"
+  display_name: "Seedance 2.5 Commercial Video Director + Prompt Compiler"
+  short_description: "把产品图/资料/分镜/参考视频/已有Prompt导演化并编译为可投喂Seedance提示词"
+  default_prompt: "Use $seedance-2-5-prompt 把下面的素材/脚本编译成可直接投喂 Seedance 2.5 的提示词，并给出 QA。"

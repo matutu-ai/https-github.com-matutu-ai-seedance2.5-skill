@@ -1,47 +1,89 @@
 ---
 name: seedance-2-5-prompt
-description: 把分镜脚本、广告文案或用户brief优化为可直接投喂 Seedance 2.5 / 即梦 / 豆包的视频生成提示词。Use when the user provides storyboards, timestamps, dialogue, character/scene specs, or prompt drafts and asks to organize, optimize, summarize, or generate a ready-to-feed video prompt; supports 4-30s timecode control, reference asset role declarations, character/wardrobe/prop locks, dialogue text locking, no-subtitle/no-BGM constraints, and 10/15/16/30s common structures.
+description: Seedance 2.5 Commercial Video Director + Prompt Compiler. Turn product images, product data, ad briefs, storyboards, reference videos, or existing prompts into ready-to-feed Seedance 2.5 / 即梦 / 豆包 prompts. Use when the user provides video creative inputs and asks to generate, optimize, rewrite, analyze, storyboard, or compile a Seedance prompt. Does not do overseas market research or TikTok trend research.
 ---
 
-# Seedance 2.5 可投喂提示词生成
+# Seedance 2.5 Commercial Video Director + Prompt Compiler
 
-## 工作流
+## 定位
 
-按固定顺序生成或改写提示词：
+Strategy 决定“拍什么”；本 Skill 决定“怎么拍”，并把导演决策编译成 Seedance 2.5 可执行 Prompt。
 
-1. **提取规格**：时长、画幅、帧率、字幕、BGM、旁白、对白语言。未指定画幅时默认 9:16 竖屏。
-2. **写导演意图**：一句话说明成片气质与核心叙事。
-3. **声明参考素材职责**：每个 `@图片N` 只负责一个职责（人物外观/产品外观/场景布局/材质），并声明“不继承什么”（背景/文字/Logo/水印/光线/人物）。
-4. **写锁**：人物锁（脸、发型、痣、服装、鞋、年龄感）、场景与空间锁（门/吧台/窗等相对位置）、道具锁（数量、不消失/不复制/不悬浮）。
-5. **写时间轴**：逐段写“时间码 / 镜头 / 画面动作 / 声音”。每段至少一个强动词、一个运镜词、一个环境或光线动态。0-3秒第一帧必须在动作中间。
-6. **锁定对白**：逐字写出台词表，标注起止时间、说话人、口吻、`repeat_count=1`，禁止改字、同音替换、回声、叠句。
-7. **写摄影/光线/质感**：明确风格关键词（手持DV/16mm/35mm/商业片/纪录片）、光线曲线、肤色规则。
-8. **写声音**：环境音层、音效层、人声层分开；无BGM时明确写“不要生成背景音乐”。
-9. **写连续性**：人物不变形不换装、道具不穿帮、方向不错镜像、无第二张清晰人脸。
-10. **写负面约束**：只写高风险项，不堆无效词。
-11. **写结尾状态**：最后1-2秒的定格、收尾运镜或淡出。
+## 适用场景
 
-## 输出形态
+- 产品图 / 产品资料 / 卖点 → 产品视频 Prompt
+- 人物 / 场景 / 产品参考 → 人物视频 Prompt
+- 广告 Brief / 分镜 → 导演方案 + Prompt
+- 参考视频 → 结构拆解 + 原创方案
+- 已有 Prompt → 诊断 + 优化 + QA
 
-- 默认输出“精简一次性投喂版”，可直接粘贴 Seedance/即梦。
-- 用户要拆段或分镜制作时，输出“逐段独立投喂版”，每段可独立生成，并注明拼接顺序与转场要求。
-- 用户要完整方案时，先输出完整叙事框架版，再附一次性投喂版。
+## 输入
 
-## 模板与质检
+产品图片、人物图片、场景图片、产品资料、参考视频、完整分镜、广告 Brief、已有 Prompt、视频创意、混合输入。
 
-- 使用 `references/template.md` 作为统一结构，顺序不可乱。
-- 生成后用 `references/checklist.md` 逐项质检。
+## 输出
 
-## 示例
+- MODE A ONE-SHOT PROMPT（默认）
+- MODE B SHOT-BY-SHOT PROMPT
+- MODE C DIRECTOR PACKAGE
 
-- 10秒韩语咖啡馆：`assets/example-10s-korean-cafe-prompt.md`
-- 16秒雨夜蛛丝动作片：`assets/example-16s-webswing-prompt.md`
-- 30秒民国戏曲短剧《绝唱》：`assets/example-30s-juechang-opera-prompt.md`
-- 15秒日立别墅电梯广告：`assets/example-15s-hitachi-elevator-prompt.md`
+## 核心 Pipeline
 
-## 关键原则
+```text
+01 INPUT DETECTION
+02 INPUT NORMALIZATION
+03 PRODUCT / SUBJECT ANALYSIS
+04 VIDEO OBJECTIVE
+05 CREATIVE STRUCTURE
+06 HOOK DESIGN
+07 STORYBOARD
+08 SHOT FEASIBILITY
+09 CONTINUITY LOCK
+10 SOUND DESIGN
+11 SEEDANCE COMPILER
+12 PROMPT QA
+13 FINAL OUTPUT
+```
 
-- 一致性由参考图锁定，提示词只负责运动；人物固定特征只写一次。
-- 对白文本是唯一声音来源，禁止模型自行改字或自行发挥。
-- 负面约束只写高风险项：不变形、不换脸、不穿帮、不重复钩子动作、无字幕/Logo/水印/UI。
-- 结尾必须有明确收束状态，避免模型硬切。
+先读 `workflows/main-pipeline.md`，再按任务类型读取对应子工作流。
+
+## 模块路由
+
+- 输入识别：`workflows/input-analysis.md`
+- 产品分析：`workflows/product-analysis.md`
+- 视频目的：`workflows/video-objective.md`
+- 创意 + Hook：`workflows/creative-structure.md`、`workflows/hook-engine.md`
+- 分镜 + 可行性：`workflows/storyboard.md`、`workflows/shot-feasibility.md`
+- 摄影 / 光线：`workflows/camera.md`
+- 声音 / 对白：`workflows/sound-design.md`
+- 连续性 / 多视角 / 参考视频：`workflows/continuity.md`、`workflows/product-multi-view.md`、`workflows/reference-video-analysis.md`
+- 编译 + QA：`workflows/prompt-compiler.md`、`workflows/prompt-qa.md`
+
+## 数据结构
+
+- 项目接口：`schemas/video-project.schema.json`
+- 锁系统：`schemas/subject-lock.schema.json`
+- 分镜：`schemas/storyboard.schema.json`
+- 对白：`schemas/dialogue.schema.json`
+
+## 模板与规则
+
+- 编译顺序：`references/template.md` 或 `templates/` 类型模板。
+- 质检：`references/checklist.md`。
+- 产品锁：`references/product-lock-rules.md`。
+- 连续性：`references/continuity-rules.md`。
+- Prompt 规则：`references/prompt-rules.md`。
+- 示例：`assets/existing-examples/`。
+
+## 关键限制
+
+- 不做海外市场研究、TikTok 爆款研究、用户画像、竞品营销分析、广告投放策略或 TikTok Shop 运营。
+- 用户已指定创意时不重复生成 3 个概念。
+- 不机械复制参考视频，只学结构、节奏、镜头语言、内容机制。
+- 产品默认禁止改设计，除非 `PRODUCT_TRANSFORMATION_ALLOWED`。
+- 保留既有能力：4-30秒、9:16默认、无字幕、无BGM、时间码、锁系统、连续性、负面约束、结尾状态、10/15/30常用结构。
+
+## 质量检查
+
+- QA 缺关键模块标记 `INCOMPLETE`，不假装完整。
+- `Prompt Readiness Score` 只是提示词就绪度，不是实际生成质量评分。

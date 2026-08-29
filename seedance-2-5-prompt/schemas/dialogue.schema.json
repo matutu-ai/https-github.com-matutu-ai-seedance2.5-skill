@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/matutu-ai/seedance2.5-skill/schemas/dialogue.schema.json",
+  "title": "Dialogue Lock",
+  "description": "Word-locked dialogue entry. The model must output exactly this text once.",
+  "type": "object",
+  "required": ["speaker", "start", "end", "text", "repeat_count"],
+  "properties": {
+    "speaker": { "type": "string" },
+    "start": { "type": "number", "minimum": 0 },
+    "end": { "type": "number", "minimum": 0 },
+    "tone": { "type": "string" },
+    "speed": { "type": "string" },
+    "language": { "type": "string" },
+    "text": { "type": "string" },
+    "repeat_count": { "type": "integer", "default": 1, "minimum": 1 },
+    "pronunciation": {
+      "type": "object",
+      "properties": {
+        "pinyin": { "type": "string" },
+        "ipa": { "type": "string" },
+        "forbidden_readings": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "voice_same_as": {
+      "type": "string",
+      "description": "For voice-over, keep the same voice as this on-screen character."
+    },
+    "rules": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/matutu-ai/seedance2.5-skill/schemas/video-project.schema.json",
+  "title": "Seedance Video Project",
+  "description": "Standard project interface used by Seedance 2.5 Commercial Video Director + Prompt Compiler and upstream creative strategy skills.",
+  "type": "object",
+  "required": [
+    "project",
+    "input",
+    "objective",
+    "creative",
+    "storyboard",
+    "output_mode",
+    "qa"
+  ],
+  "properties": {
+    "project": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "duration_seconds": { "type": "number", "minimum": 4, "maximum": 30 },
+        "aspect_ratio": { "type": "string", "default": "9:16" },
+        "frame_rate": { "type": "number" },
+        "platform": { "type": "string" },
+        "language": { "type": "string", "default": "zh" },
+        "output_mode": {
+          "type": "string",
+          "enum": ["ONE_SHOT_PROMPT", "SHOT_BY_SHOT_PROMPT", "DIRECTOR_PACKAGE"]
+        },
+        "status": { "type": "string", "default": "DRAFT" }
+      }
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "input_type": {
+          "type": "string",
+          "enum": [
+            "PRODUCT_IMAGE",
+            "CHARACTER_IMAGE",
+            "SCENE_IMAGE",
+            "PRODUCT_DATA",
+            "VIDEO_REFERENCE",
+            "STORYBOARD",
+            "AD_BRIEF",
+            "EXISTING_PROMPT",
+            "MIXED"
+          ]
+        },
+        "detected_task": {
+          "type": "string",
+          "enum": ["GENERATE", "OPTIMIZE", "REWRITE", "ANALYZE", "STORYBOARD", "COMPILE"]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "asset_id": { "type": "string" },
+              "kind": { "type": "string" },
+              "role": { "type": "string" },
+              "inherit": { "type": "array", "items": { "type": "string" } },
+              "do_not_inherit": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "raw_brief": { "type": "string" }
+      }
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "appearance": { "type": "string" },
+        "colors": { "type": "array", "items": { "type": "string" } },
+        "materials": { "type": "array", "items": { "type": "string" } },
+        "structure": { "type": "string" },
+        "dimensions": { "type": "string" },
+        "controls": { "type": "array", "items": { "type": "string" } },
+        "logo": { "type": "string" },
+        "text": { "type": "string" },
+        "packaging": { "type": "string" },
+        "accessories": { "type": "array", "items": { "type": "string" } },
+        "functions": { "type": "array", "items": { "type": "string" } },
+        "usage": { "type": "string" },
+        "key_selling_points": { "type": "array", "items": { "type": "string" } },
+        "immutable_elements": { "type": "array", "items": { "type": "string" } },
+        "transformation_allowed": { "type": "boolean", "default": false },
+        "lock": { "$ref": "subject-lock.schema.json" }
+      }
+    },
+    "characters": {
+      "type": "array",
+      "items": { "$ref": "subject-lock.schema.json" }
+    },
+    "scene": {
+      "type": "object",
+      "properties": {
+        "location": { "type": "string" },
+        "layout": { "type": "string" },
+        "time_of_day": { "type": "string" },
+        "lighting": { "type": "string" },
+        "space_lock": { "type": "string" },
+        "transitions_allowed": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "objective": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "PRODUCT_SHOWCASE",
+            "UGC",
+            "PRODUCT_DEMO",
+            "TUTORIAL",
+            "UNBOXING",
+            "REVIEW",
+            "PROBLEM_SOLUTION",
+            "BEFORE_AFTER",
+            "VISUAL_HOOK",
+            "STORY_AD",
+            "BRAND_AD",
+            "PRODUCT_LAUNCH"
+          ]
+        },
+        "intent": { "type": "string" },
+        "success_metrics": { "type": "array", "items": { "type": "string" } },
+        "platform_constraints": { "type": "string" }
+      }
+    },
+    "creative": {
+      "type": "object",
+      "properties": {
+        "concept_name": { "type": "string" },
+        "structure": { "type": "string" },
+        "hook": { "$ref": "#/$defs/hook" },
+        "product_integration": { "type": "string" },
+        "visual_style": { "type": "string" },
+        "ending": { "type": "string" },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "hook": { "type": "string" },
+              "logic": { "type": "string" },
+              "product_integration": { "type": "string" },
+              "visual_style": { "type": "string" },
+              "ending": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "hook": { "$ref": "#/$defs/hook" },
+    "storyboard": {
+      "type": "array",
+      "items": { "$ref": "storyboard.schema.json" }
+    },
+    "camera": {
+      "type": "object",
+      "properties": {
+        "default_shot_size": { "type": "string" },
+        "default_movement": { "type": "string" },
+        "depth_of_field": { "type": "string" },
+        "focus": { "type": "string" },
+        "trajectory": { "type": "string" },
+        "executability_rules": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "lighting": {
+      "type": "object",
+      "properties": {
+        "source": { "type": "string" },
+        "direction": { "type": "string" },
+        "intensity": { "type": "string" },
+        "color_temperature": { "type": "string" },
+        "contrast": { "type": "string" },
+        "shadows": { "type": "string" },
+        "ambient": { "type": "string" },
+        "progression": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "sound": {
+      "type": "object",
+      "properties": {
+        "ambience": { "type": "array", "items": { "type": "string" } },
+        "sfx": { "type": "array", "items": { "type": "string" } },
+        "voice": { "type": "array", "items": { "type": "string" } },
+        "dialogue": { "type": "array", "items": { "$ref": "dialogue.schema.json" } },
+        "bgm": { "type": "string", "default": "NO BACKGROUND MUSIC" }
+      }
+    },
+    "continuity": {
+      "type": "object",
+      "properties": {
+        "character": { "type": "string" },
+        "product": { "type": "string" },
+        "scene": { "type": "string" },
+        "action": { "type": "string" },
+        "camera": { "type": "string" },
+        "forbidden_changes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "negative_constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "output_mode": {
+      "type": "string",
+      "enum": ["ONE_SHOT_PROMPT", "SHOT_BY_SHOT_PROMPT", "DIRECTOR_PACKAGE"]
+    },
+    "qa": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "enum": ["INCOMPLETE", "READY"] },
+        "checks": { "type": "object" },
+        "missing_modules": { "type": "array", "items": { "type": "string" } },
+        "score": {
+          "type": "object",
+          "properties": {
+            "clarity": { "type": "number", "minimum": 0, "maximum": 100 },
+            "actionability": { "type": "number", "minimum": 0, "maximum": 100 },
+            "continuity": { "type": "number", "minimum": 0, "maximum": 100 },
+            "product_fidelity": { "type": "number", "minimum": 0, "maximum": 100 },
+            "character_fidelity": { "type": "number", "minimum": 0, "maximum": 100 },
+            "camera_executability": { "type": "number", "minimum": 0, "maximum": 100 },
+            "audio_completeness": { "type": "number", "minimum": 0, "maximum": 100 },
+            "temporal_coherence": { "type": "number", "minimum": 0, "maximum": 100 }
+          }
+        },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "$defs": {
+    "hook": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "VISUAL_HOOK",
+            "ACTION_HOOK",
+            "PROBLEM_HOOK",
+            "CURIOSITY_HOOK",
+            "RESULT_HOOK",
+            "TRANSFORMATION_HOOK",
+            "PRODUCT_HOOK",
+            "CONTRAST_HOOK",
+            "SPEED_HOOK",
+            "SOUND_HOOK"
+          ]
+        },
+        "description": { "type": "string" },
+        "start": { "type": "number" },
+        "duration": { "type": "number" },
+        "relation_to_selling_point": { "type": "string" }
+      },
+      "required": ["type", "description"]
+    }
+  }
+}
